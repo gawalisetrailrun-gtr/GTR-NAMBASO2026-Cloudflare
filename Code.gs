@@ -22,6 +22,7 @@ const CONFIG = {
 
 const HEADERS = [
   'ID PESERTA','NAMA LENGKAP','NIK','WHATSAPP','JENIS KELAMIN',
+  'NOMOR KONTAK EMERGENCY','NAMA KONTAK EMERGENCY','GOL. DARAH','NAMA KOMUNITAS',
   'ALAMAT','KATEGORI','SIZE JERSEY','JERSEY RACE',
   'SIZE WINDBREAKER','KTP FILE','BUKTI TRANSFER','STATUS','TANGGAL DAFTAR'
 ];
@@ -313,6 +314,10 @@ function registerParticipant(data) {
       x.nik,
       x.whatsapp,
       x.jenisKelamin,
+      x.nomorKontakEmergency,
+      x.namaKontakEmergency,
+      x.golDarah,
+      x.namaKomunitas,
       x.alamat,
       category,
       x.sizeJersey,
@@ -346,6 +351,10 @@ function normalizeRegistration_(d) {
     nik: digits_(d.nik),
     whatsapp: phone_(d.whatsapp),
     jenisKelamin: clean_(d.jenisKelamin),
+    nomorKontakEmergency: phone_(d.nomorKontakEmergency),
+    namaKontakEmergency: clean_(d.namaKontakEmergency),
+    golDarah: clean_(d.golDarah).toUpperCase(),
+    namaKomunitas: clean_(d.namaKomunitas),
     alamat: clean_(d.alamat),
     kategori: category,
     sizeJersey: clean_(d.sizeJersey),
@@ -364,6 +373,9 @@ function validateRegistration_(x) {
   if (x.nik.length < 8) throw new Error('NIK tidak valid.');
   if (x.whatsapp.length < 8) throw new Error('Nomor WhatsApp tidak valid.');
   if (!x.jenisKelamin) throw new Error('Jenis kelamin wajib dipilih.');
+  if (x.nomorKontakEmergency.length < 8) throw new Error('Nomor kontak emergency tidak valid.');
+  if (!x.namaKontakEmergency) throw new Error('Nama kontak emergency wajib diisi.');
+  if (!['A','B','AB','O'].includes(x.golDarah)) throw new Error('Golongan darah wajib dipilih.');
   if (!x.alamat) throw new Error('Alamat wajib diisi.');
   if (!x.kategori) throw new Error('Kategori wajib dipilih.');
 
@@ -756,6 +768,10 @@ function indexes_(headers) {
       case 'NIK': m.nik = i; break;
       case 'WHATSAPP': m.phone = i; break;
       case 'JENIS KELAMIN': m.gender = i; break;
+      case 'NOMOR KONTAK EMERGENCY': m.emergencyPhone = i; break;
+      case 'NAMA KONTAK EMERGENCY': m.emergencyName = i; break;
+      case 'GOL. DARAH': m.bloodType = i; break;
+      case 'NAMA KOMUNITAS': m.community = i; break;
       case 'ALAMAT': m.address = i; break;
       case 'KATEGORI': m.cat = i; break;
       case 'SIZE JERSEY': m.jersey = i; break;
@@ -791,6 +807,10 @@ function adminParticipant_(r, I) {
     nik:r[I.nik],
     whatsapp:r[I.phone],
     jenisKelamin:r[I.gender],
+    nomorKontakEmergency:r[I.emergencyPhone],
+    namaKontakEmergency:r[I.emergencyName],
+    golDarah:r[I.bloodType],
+    namaKomunitas:r[I.community],
     alamat:r[I.address],
     kategori:r[I.cat],
     sizeJersey:r[I.jersey],
