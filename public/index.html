@@ -405,7 +405,67 @@
                             </div>
                         </div>
 
-                        <!-- BARIS 3: ALAMAT LENGKAP -->
+                        <!-- BARIS 3: KONTAK EMERGENCY -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                            <div>
+                                <label for="nomorKontakEmergency" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                    Nomor Kontak Emergency <span class="text-blue-600">*</span>
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <i data-lucide="phone-call" class="w-5 h-5"></i>
+                                    </div>
+                                    <input type="tel" id="nomorKontakEmergency" required placeholder="Contoh: 081234567890"
+                                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                        class="w-full pl-11 pr-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:border-blue-600 focus:bg-white transition">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="namaKontakEmergency" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                    Nama Kontak Emergency <span class="text-blue-600">*</span>
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <i data-lucide="user-round" class="w-5 h-5"></i>
+                                    </div>
+                                    <input type="text" id="namaKontakEmergency" required placeholder="Nama keluarga / kontak darurat"
+                                        class="w-full pl-11 pr-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:border-blue-600 focus:bg-white transition">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BARIS 4: GOL. DARAH & NAMA KOMUNITAS -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                            <div>
+                                <label for="golDarah" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                    Gol. Darah <span class="text-blue-600">*</span>
+                                </label>
+                                <select id="golDarah" required
+                                    class="w-full px-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-xs sm:text-sm focus:outline-none focus:border-blue-600 focus:bg-white transition">
+                                    <option value="">Pilih Golongan Darah</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="AB">AB</option>
+                                    <option value="O">O</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="namaKomunitas" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                    Nama Komunitas <span class="text-slate-400 font-normal normal-case">(opsional)</span>
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <i data-lucide="users-round" class="w-5 h-5"></i>
+                                    </div>
+                                    <input type="text" id="namaKomunitas" placeholder="Contoh: Komunitas Runner Gawalise"
+                                        class="w-full pl-11 pr-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:border-blue-600 focus:bg-white transition">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BARIS 5: ALAMAT LENGKAP -->
                         <div>
                             <label for="alamat" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                                 Alamat Lengkap <span class="text-blue-600">*</span>
@@ -419,7 +479,7 @@
                             </div>
                         </div>
 
-                        <!-- BARIS 4: KATEGORI & UKURAN -->
+                        <!-- BARIS 6: KATEGORI & UKURAN -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-1">
                             <div>
                                 <label for="kategori" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
@@ -1301,6 +1361,10 @@
                     nik: document.getElementById("nik").value.trim(),
                     whatsapp: document.getElementById("whatsapp").value.trim(),
                     jenisKelamin: jk.value,
+                    nomorKontakEmergency: document.getElementById("nomorKontakEmergency").value.trim(),
+                    namaKontakEmergency: document.getElementById("namaKontakEmergency").value.trim(),
+                    golDarah: document.getElementById("golDarah").value,
+                    namaKomunitas: document.getElementById("namaKomunitas").value.trim(),
                     alamat: document.getElementById("alamat").value.trim(),
                     kategori: kategori,
                     sizeJersey: sizeJersey,
