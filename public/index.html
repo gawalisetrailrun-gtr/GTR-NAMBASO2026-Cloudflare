@@ -851,7 +851,7 @@
                                 <label class="block text-[11px] sm:text-xs text-slate-500 font-semibold mb-1">Status Early Bird</label>
                                 <select id="settingEarlyBirdActive" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-xs sm:text-sm">
                                     <option value="YES">Early Bird AKTIF</option>
-                                    <option value="NO">Harga Normal Saja</option>
+                                    <option value="NO">Payment</option>
                                 </select>
                             </div>
                         </div>
@@ -1162,8 +1162,8 @@
 
             if (p7El) p7El.innerText = `Rp ${p7.toLocaleString("id-ID")}`;
             if (p18El) p18El.innerText = `Rp ${p18.toLocaleString("id-ID")}`;
-            if (p7Type) p7Type.innerText = appSettings.earlyBirdActive === "YES" ? "Early Bird" : "Harga Normal";
-            if (p18Type) p18Type.innerText = appSettings.earlyBirdActive === "YES" ? "Early Bird" : "Harga Normal";
+            if (p7Type) p7Type.innerText = appSettings.earlyBirdActive === "YES" ? "Early Bird" : "Payment";
+            if (p18Type) p18Type.innerText = appSettings.earlyBirdActive === "YES" ? "Early Bird" : "Payment";
 
             const badge = document.getElementById("heroStatusBadge");
             if (badge) {
@@ -1225,7 +1225,7 @@
             if (priceTypeNote) {
                 priceTypeNote.innerText = useEarlyBird
                     ? "Harga Early Bird Aktif"
-                    : "Harga Normal Aktif";
+                    : "Payment Aktif";
             }
 
             const paymentStatusTag = document.getElementById("paymentStatusTag");
