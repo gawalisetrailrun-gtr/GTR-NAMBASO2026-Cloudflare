@@ -208,7 +208,7 @@
                         <div class="flex items-center gap-3 mb-4">
                             <span class="text-3xl sm:text-4xl font-extrabold font-display text-blue-600 tracking-wider">7K</span>
                             <div>
-                                <h3 class="text-base sm:text-lg font-bold text-slate-900">Gawalise Trail Sprint</h3>
+                                <h3 class="text-base sm:text-lg font-bold text-slate-900">Gawalise Trail Fun</h3>
                                 <p class="text-xs text-slate-500">Cocok untuk Pemula & Runner Hobi</p>
                             </div>
                         </div>
@@ -427,7 +427,7 @@
                                 </label>
                                 <select id="kategori" required onchange="onCategoryChanged()"
                                     class="w-full px-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-xs sm:text-sm focus:outline-none focus:border-blue-600 focus:bg-white transition">
-                                    <option value="7K">7K - Fun Trail Sprint</option>
+                                    <option value="7K">7K - Fun Trail</option>
                                     <option value="18K">18K - Extreme Summit Trail</option>
                                 </select>
                                 <p class="mt-1.5 text-[10px] sm:text-xs text-slate-500">
@@ -1370,7 +1370,7 @@
             document.getElementById("ticketNik").innerText = participant.nik || "-";
             document.getElementById("ticketWa").innerText = participant.whatsapp || "-";
             document.getElementById("ticketCategory").innerText =
-                `${participant.kategori || ""} ${participant.kategori === "18K" ? "EXTREME" : "FUN SPRINT"}`;
+                `${participant.kategori || ""} ${participant.kategori === "18K" ? "EXTREME" : "FUN TRAIL"}`;
 
             if (participant.kategori === "18K") {
                 document.getElementById("ticketSizeLabel").innerText = "Perlengkapan";
