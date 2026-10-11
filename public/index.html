@@ -700,6 +700,10 @@
                         <span id="ticketWa" class="font-mono text-slate-700">08123456789</span>
                     </div>
                     <div class="flex justify-between border-b border-slate-100 pb-1.5 sm:pb-2 gap-2">
+                        <span class="text-slate-500 shrink-0">Email</span>
+                        <span id="ticketEmail" class="text-slate-700 text-right break-all">-</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-100 pb-1.5 sm:pb-2 gap-2">
                         <span class="text-slate-500 shrink-0">Kategori Lari</span>
                         <span id="ticketCategory" class="font-extrabold text-blue-600">18K EXTREME</span>
                     </div>
@@ -1011,6 +1015,39 @@
             <div id="detailContentContainer" class="space-y-4">
                 <!-- Injected via JS -->
             </div>
+        </div>
+    </div>
+
+    <!-- MODAL: EDIT DATA PESERTA (ADMIN) -->
+    <div id="participantEditModal" class="fixed inset-0 z-[60] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-3xl w-full p-5 sm:p-6 space-y-5 shadow-2xl my-8">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">Edit Data Peserta</h3>
+                    <p id="editParticipantIdLabel" class="text-xs text-blue-600 font-mono mt-1"></p>
+                </div>
+                <button type="button" onclick="closeModal('participantEditModal')" class="text-slate-400 hover:text-slate-700" aria-label="Tutup">✕</button>
+            </div>
+            <form id="participantEditForm" onsubmit="saveParticipantEdit(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                <input type="hidden" id="editParticipantId">
+                <label class="block"><span class="block text-xs font-semibold mb-1">Nama Lengkap *</span><input id="editNama" required class="w-full border rounded-lg px-3 py-2"></label>
+                <label class="block"><span class="block text-xs font-semibold mb-1">NIK *</span><input id="editNik" required inputmode="numeric" class="w-full border rounded-lg px-3 py-2"></label>
+                <label class="block"><span class="block text-xs font-semibold mb-1">Nomor WhatsApp *</span><input id="editWhatsapp" required type="tel" class="w-full border rounded-lg px-3 py-2"></label>
+                <label class="block"><span class="block text-xs font-semibold mb-1">Email *</span><input id="editEmail" required type="email" class="w-full border rounded-lg px-3 py-2"></label>
+                <label class="block"><span class="block text-xs font-semibold mb-1">Jenis Kelamin *</span><select id="editGender" required class="w-full border rounded-lg px-3 py-2"><option value="">Pilih</option><option>Perempuan</option><option>Laki-laki</option></select></label>
+                <label class="block"><span class="block text-xs font-semibold mb-1">Kategori *</span><select id="editKategori" required onchange="toggleEditWindbreaker()" class="w-full border rounded-lg px-3 py-2"><option value="7K">7K</option><option value="18K">18K</option></select></label>
+                <label class="block"><span class="block text-xs font-semibold mb-1">Nomor Kontak Emergency *</span><input id="editEmergencyPhone" required type="tel" class="w-full border rounded-lg px-3 py-2"></label>
+                <label class="block"><span class="block text-xs font-semibold mb-1">Nama Kontak Emergency *</span><input id="editEmergencyName" required class="w-full border rounded-lg px-3 py-2"></label>
+                <label class="block"><span class="block text-xs font-semibold mb-1">Golongan Darah *</span><select id="editBloodType" required class="w-full border rounded-lg px-3 py-2"><option value="">Pilih</option><option>A</option><option>B</option><option>AB</option><option>O</option></select></label>
+                <label class="block"><span class="block text-xs font-semibold mb-1">Nama Komunitas</span><input id="editCommunity" class="w-full border rounded-lg px-3 py-2"></label>
+                <label class="block"><span class="block text-xs font-semibold mb-1">Ukuran Jersey Race *</span><select id="editSizeJersey" required class="w-full border rounded-lg px-3 py-2"><option value="">Pilih ukuran</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option><option>3XL</option></select></label>
+                <label id="editWindbreakerWrap" class="block"><span class="block text-xs font-semibold mb-1">Ukuran Windbreaker (18K) *</span><select id="editSizeWindbreaker" class="w-full border rounded-lg px-3 py-2"><option value="">Pilih ukuran</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option><option>3XL</option></select></label>
+                <label class="block sm:col-span-2"><span class="block text-xs font-semibold mb-1">Alamat *</span><textarea id="editAlamat" required rows="2" class="w-full border rounded-lg px-3 py-2"></textarea></label>
+                <div class="sm:col-span-2 flex flex-wrap justify-end gap-2 pt-3 border-t">
+                    <button type="button" onclick="closeModal('participantEditModal')" class="px-4 py-2 rounded-lg bg-slate-100 font-semibold text-slate-700">Batal</button>
+                    <button id="saveParticipantEditBtn" type="submit" class="px-4 py-2 rounded-lg bg-blue-600 text-white font-bold">Simpan Perubahan</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -1463,6 +1500,8 @@
             document.getElementById("ticketName").innerText = participant.nama || "-";
             document.getElementById("ticketNik").innerText = participant.nik || "-";
             document.getElementById("ticketWa").innerText = participant.whatsapp || "-";
+            const ticketEmail = document.getElementById("ticketEmail");
+            if (ticketEmail) ticketEmail.innerText = participant.email || "-";
             document.getElementById("ticketCategory").innerText =
                 `${participant.kategori || ""} ${participant.kategori === "18K" ? "EXTREME" : "FUN TRAIL"}`;
 
@@ -1709,6 +1748,12 @@
                                 </td>
                                 <td class="p-4 text-center">
                                     <div class="flex items-center justify-center gap-1">
+                                        <button onclick="editParticipant('${escapeJs(p.id)}')" title="Edit Peserta" class="p-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200">
+                                            <i data-lucide="pencil" class="w-4 h-4"></i>
+                                        </button>
+                                        <button onclick="printParticipantTicket('${escapeJs(p.id)}')" title="Cetak Bukti + QR Code" class="p-1.5 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200">
+                                            <i data-lucide="printer" class="w-4 h-4"></i>
+                                        </button>
                                         <button onclick="deleteParticipant('${escapeJs(p.id)}')" title="Hapus Data" class="p-1.5 rounded-lg bg-slate-100 text-slate-500 hover:text-red-600 border border-slate-200">
                                             <i data-lucide="trash-2" class="w-4 h-4"></i>
                                         </button>
@@ -1790,6 +1835,102 @@
                             <button onclick="closeModal('participantDetailModal')" class="px-4 py-2 bg-slate-200 text-slate-700 font-bold text-xs rounded-xl">Tutup</button>
                         </div>`;
                     openModal("participantDetailModal");
+                })
+                .withFailureHandler(adminError)
+                .adminGetParticipant(adminToken, id);
+        }
+
+        function editParticipant(id) {
+            gas()
+                .withSuccessHandler(result => {
+                    if (!result?.success || !result.participant) {
+                        alert(result?.message || "Data peserta tidak ditemukan.");
+                        return;
+                    }
+                    const p = result.participant;
+                    document.getElementById("editParticipantId").value = p.id || id;
+                    document.getElementById("editParticipantIdLabel").innerText = "ID Peserta: " + (p.id || id);
+                    document.getElementById("editNama").value = p.nama || "";
+                    document.getElementById("editNik").value = p.nik || "";
+                    document.getElementById("editWhatsapp").value = p.whatsapp || "";
+                    document.getElementById("editEmail").value = p.email || "";
+                    document.getElementById("editGender").value = p.jenisKelamin || "";
+                    document.getElementById("editKategori").value = p.kategori || "7K";
+                    document.getElementById("editEmergencyPhone").value = p.nomorKontakEmergency || "";
+                    document.getElementById("editEmergencyName").value = p.namaKontakEmergency || "";
+                    document.getElementById("editBloodType").value = p.golDarah || "";
+                    document.getElementById("editCommunity").value = p.namaKomunitas || "";
+                    document.getElementById("editAlamat").value = p.alamat || "";
+                    document.getElementById("editSizeJersey").value = p.sizeJersey || "";
+                    document.getElementById("editSizeWindbreaker").value = p.sizeWindbreaker || "";
+                    toggleEditWindbreaker();
+                    openModal("participantEditModal");
+                })
+                .withFailureHandler(adminError)
+                .adminGetParticipant(adminToken, id);
+        }
+
+        function toggleEditWindbreaker() {
+            const is18K = document.getElementById("editKategori")?.value === "18K";
+            const wrap = document.getElementById("editWindbreakerWrap");
+            const field = document.getElementById("editSizeWindbreaker");
+            if (wrap) wrap.classList.toggle("hidden", !is18K);
+            if (field) field.required = is18K;
+            if (!is18K && field) field.value = "";
+        }
+
+        function saveParticipantEdit(event) {
+            event.preventDefault();
+            const id = document.getElementById("editParticipantId").value;
+            const btn = document.getElementById("saveParticipantEditBtn");
+            const data = {
+                nama: document.getElementById("editNama").value.trim(),
+                nik: document.getElementById("editNik").value.trim(),
+                whatsapp: document.getElementById("editWhatsapp").value.trim(),
+                email: document.getElementById("editEmail").value.trim().toLowerCase(),
+                jenisKelamin: document.getElementById("editGender").value,
+                kategori: document.getElementById("editKategori").value,
+                nomorKontakEmergency: document.getElementById("editEmergencyPhone").value.trim(),
+                namaKontakEmergency: document.getElementById("editEmergencyName").value.trim(),
+                golDarah: document.getElementById("editBloodType").value,
+                namaKomunitas: document.getElementById("editCommunity").value.trim(),
+                alamat: document.getElementById("editAlamat").value.trim(),
+                sizeJersey: document.getElementById("editSizeJersey").value,
+                sizeWindbreaker: document.getElementById("editSizeWindbreaker").value
+            };
+            if (btn) { btn.disabled = true; btn.textContent = "Menyimpan..."; }
+            gas()
+                .withSuccessHandler(result => {
+                    if (btn) { btn.disabled = false; btn.textContent = "Simpan Perubahan"; }
+                    if (!result?.success) {
+                        alert(result?.message || "Perubahan tidak berhasil disimpan.");
+                        return;
+                    }
+                    closeModal("participantEditModal");
+                    alert("Data peserta berhasil diperbarui.");
+                    renderParticipantsTable();
+                })
+                .withFailureHandler(err => {
+                    if (btn) { btn.disabled = false; btn.textContent = "Simpan Perubahan"; }
+                    adminError(err);
+                })
+                .adminUpdateParticipant(adminToken, id, data);
+        }
+
+        function printParticipantTicket(id) {
+            gas()
+                .withSuccessHandler(result => {
+                    if (!result?.success || !result.participant) {
+                        alert(result?.message || "Data peserta tidak ditemukan.");
+                        return;
+                    }
+                    const p = result.participant;
+                    showTicketModal({
+                        ...p,
+                        createdAt: p.tanggal || "-",
+                        showWhatsappGroup: false
+                    });
+                    window.setTimeout(() => window.print(), 350);
                 })
                 .withFailureHandler(adminError)
                 .adminGetParticipant(adminToken, id);
