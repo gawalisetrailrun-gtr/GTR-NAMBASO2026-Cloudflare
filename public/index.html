@@ -145,7 +145,7 @@
                         <div class="glass-card p-3 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
                             <span class="text-[10px] sm:text-[11px] text-slate-500 block font-medium uppercase">Lokasi Start</span>
                             <span class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-1.5 mt-0.5">
-                                <i data-lucide="map-pin" class="w-4 h-4 text-blue-600 shrink-0"></i>  Desa Kanuna, Kec. Kinovaro, Kab. Sigi - Sulawesi Tengah
+                                <i data-lucide="map-pin" class="w-4 h-4 text-blue-600 shrink-0"></i> Gunung Gawalise - Sulawesi Tengah
                             </span>
                         </div>
                         <div class="glass-card p-3 sm:p-4 rounded-xl border border-slate-200 shadow-sm">
@@ -280,11 +280,7 @@
                             </div>
                             <div class="flex items-center gap-2">
                                 <i data-lucide="check-circle-2" class="w-4 h-4 text-blue-600 shrink-0"></i>
-                                <span>BIB Number</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i data-lucide="check-circle-2" class="w-4 h-4 text-blue-600 shrink-0"></i>
-                                <span>Medali Finisher</span>
+                                <span>BIB Number & Medali Finisher</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <i data-lucide="check-circle-2" class="w-4 h-4 text-blue-600 shrink-0"></i>
@@ -406,6 +402,24 @@
                                         </div>
                                     </label>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- EMAIL WAJIB -->
+                        <div class="grid grid-cols-1 gap-4 sm:gap-6">
+                            <div>
+                                <label for="email" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                    Email Aktif <span class="text-blue-600">*</span>
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                        <i data-lucide="mail" class="w-5 h-5"></i>
+                                    </div>
+                                    <input type="email" id="email" name="email" required autocomplete="email" maxlength="254"
+                                        placeholder="Contoh: nama@email.com"
+                                        class="w-full pl-11 pr-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:border-blue-600 focus:bg-white transition">
+                                </div>
+                                <p class="mt-1.5 text-xs text-slate-500">Pastikan email aktif dan penulisannya benar.</p>
                             </div>
                         </div>
 
@@ -855,7 +869,7 @@
                                 <label class="block text-[11px] sm:text-xs text-slate-500 font-semibold mb-1">Status Early Bird</label>
                                 <select id="settingEarlyBirdActive" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-xs sm:text-sm">
                                     <option value="YES">Early Bird AKTIF</option>
-                                    <option value="NO">Payment</option>
+                                    <option value="NO">Harga Normal Saja</option>
                                 </select>
                             </div>
                         </div>
@@ -876,7 +890,7 @@
                                     <input type="number" id="settingPrice7kEarly" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-900 text-xs sm:text-sm mt-1">
                                 </div>
                                 <div>
-                                    <label class="block text-[11px] sm:text-xs text-slate-500">Payment (Rp)</label>
+                                    <label class="block text-[11px] sm:text-xs text-slate-500">Harga Normal (Rp)</label>
                                     <input type="number" id="settingPrice7kNormal" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-900 text-xs sm:text-sm mt-1">
                                 </div>
                             </div>
@@ -889,7 +903,7 @@
                                     <input type="number" id="settingPrice18kEarly" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-900 text-xs sm:text-sm mt-1">
                                 </div>
                                 <div>
-                                    <label class="block text-[11px] sm:text-xs text-slate-500">Payment (Rp)</label>
+                                    <label class="block text-[11px] sm:text-xs text-slate-500">Harga Normal (Rp)</label>
                                     <input type="number" id="settingPrice18kNormal" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-900 text-xs sm:text-sm mt-1">
                                 </div>
                             </div>
@@ -1166,8 +1180,8 @@
 
             if (p7El) p7El.innerText = `Rp ${p7.toLocaleString("id-ID")}`;
             if (p18El) p18El.innerText = `Rp ${p18.toLocaleString("id-ID")}`;
-            if (p7Type) p7Type.innerText = appSettings.earlyBirdActive === "YES" ? "Early Bird" : "Payment";
-            if (p18Type) p18Type.innerText = appSettings.earlyBirdActive === "YES" ? "Early Bird" : "Payment";
+            if (p7Type) p7Type.innerText = appSettings.earlyBirdActive === "YES" ? "Early Bird" : "Harga Normal";
+            if (p18Type) p18Type.innerText = appSettings.earlyBirdActive === "YES" ? "Early Bird" : "Harga Normal";
 
             const badge = document.getElementById("heroStatusBadge");
             if (badge) {
@@ -1229,7 +1243,7 @@
             if (priceTypeNote) {
                 priceTypeNote.innerText = useEarlyBird
                     ? "Harga Early Bird Aktif"
-                    : "Payment Aktif";
+                    : "Harga Normal Aktif";
             }
 
             const paymentStatusTag = document.getElementById("paymentStatusTag");
@@ -1364,6 +1378,7 @@
                     namaLengkap: document.getElementById("namaLengkap").value.trim(),
                     nik: document.getElementById("nik").value.trim(),
                     whatsapp: document.getElementById("whatsapp").value.trim(),
+                    email: document.getElementById("email").value.trim().toLowerCase(),
                     jenisKelamin: jk.value,
                     nomorKontakEmergency: document.getElementById("nomorKontakEmergency").value.trim(),
                     namaKontakEmergency: document.getElementById("namaKontakEmergency").value.trim(),
