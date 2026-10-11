@@ -1115,9 +1115,12 @@
                                 message: "Respons server tidak valid."
                             }));
 
-                            if (!response.ok || payload?.success === false && payload?.error) {
+                            // Apps Script doPost returns {success:false, message:"..."} on server errors.
+                            // Treat every success:false response as a failure so the real reason is shown.
+                            if (!response.ok || payload?.success === false) {
                                 const err = new Error(payload?.message || payload?.error || "Permintaan gagal.");
                                 if (failureHandler) failureHandler(err);
+                                else console.error(err);
                                 return;
                             }
 
@@ -1462,6 +1465,7 @@
                             nama: result.nama,
                             nik: data.nik,
                             whatsapp: data.whatsapp,
+                            email: data.email,
                             kategori: result.kategori,
                             jerseyRace: result.jerseyRace,
                             sizeJersey: data.sizeJersey,
