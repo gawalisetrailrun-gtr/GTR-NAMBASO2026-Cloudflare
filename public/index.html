@@ -74,13 +74,11 @@
             touch-action: manipulation;
         }
 
-        @page {
-            size: A4 portrait;
-            margin: 10mm;
-        }
+        @page { size: A4 portrait; margin: 8mm; }
         @media print {
             html, body {
-                width: 100% !important;
+                display: block !important;
+                width: auto !important;
                 height: auto !important;
                 min-height: 0 !important;
                 margin: 0 !important;
@@ -88,59 +86,61 @@
                 overflow: visible !important;
                 background: #fff !important;
             }
-            body * { visibility: hidden !important; }
+            /* Hilangkan elemen halaman utama dari layout cetak agar tidak membuat halaman kosong tambahan. */
+            body > * { display: none !important; }
             #ticketModal {
                 display: block !important;
                 position: static !important;
                 inset: auto !important;
-                width: auto !important;
+                width: 100% !important;
                 height: auto !important;
                 max-height: none !important;
                 margin: 0 !important;
                 padding: 0 !important;
                 overflow: visible !important;
                 background: #fff !important;
-                backdrop-filter: none !important;
+                visibility: visible !important;
             }
             #ticketModal > div {
                 display: block !important;
                 position: static !important;
-                width: auto !important;
+                width: 100% !important;
                 max-width: none !important;
-                max-height: none !important;
                 height: auto !important;
+                max-height: none !important;
                 margin: 0 !important;
                 padding: 0 !important;
                 overflow: visible !important;
                 border: 0 !important;
                 border-radius: 0 !important;
                 box-shadow: none !important;
+                background: #fff !important;
             }
-            #printableTicket, #printableTicket * { visibility: visible !important; }
+            #ticketModal * { visibility: visible !important; }
             #printableTicket {
-                position: static !important;
                 display: block !important;
+                position: static !important;
                 width: 100% !important;
                 height: auto !important;
                 max-height: none !important;
                 margin: 0 !important;
-                padding: 5mm !important;
+                padding: 3mm !important;
                 overflow: visible !important;
                 box-sizing: border-box !important;
-                background: white !important;
-                color: black !important;
+                background: #fff !important;
+                color: #000 !important;
+                font-size: 9pt !important;
                 break-inside: avoid !important;
                 page-break-inside: avoid !important;
-                font-size: 10pt !important;
             }
-            #printableTicket h2 { font-size: 17pt !important; }
+            #printableTicket h2 { font-size: 15pt !important; margin: 0 0 5px !important; }
             #printableTicket .space-y-4 > :not([hidden]) ~ :not([hidden]),
-            #printableTicket .space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 10px !important; }
-            #printableTicket .p-5, #printableTicket .sm\:p-8 { padding: 10px !important; }
-            #printableTicket .p-3\.5, #printableTicket .sm\:p-4 { padding: 8px !important; }
-            #printableTicket .no-print, .no-print { display: none !important; }
-        }
-    </style>
+            #printableTicket .space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 5px !important; }
+            #printableTicket .p-5, #printableTicket .sm\:p-8,
+            #printableTicket .p-3\.5, #printableTicket .sm\:p-4 { padding: 5px !important; }
+            #printableTicket img, #printableTicket canvas, #printableTicket svg { max-height: 32mm !important; }
+            .no-print, #ticketModal .no-print { display: none !important; }
+        }    </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
 
