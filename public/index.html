@@ -808,10 +808,10 @@
                 
                 <!-- Table Controls -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                    <input type="text" id="adminSearchInput" oninput="renderParticipantsTable()" placeholder="Cari Nama / NIK / No. WA..."
+                    <input type="text" id="adminSearchInput" oninput="debouncedAdminSearch()" placeholder="Cari Nama / NIK / No. WA..."
                         class="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 text-xs sm:text-sm focus:outline-none focus:border-blue-600">
                     
-                    <select id="adminCategoryFilter" onchange="renderParticipantsTable()"
+                    <select id="adminCategoryFilter" onchange="adminPage = 1; renderParticipantsTable()"
                         class="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 text-xs sm:text-sm focus:outline-none focus:border-blue-600">
                         <option value="ALL">Semua Kategori (7K & 18K)</option>
                         <option value="7K">Kategori 7K Only</option>
@@ -1630,15 +1630,20 @@
 
         let adminSearchTimer = null;
         let adminListRequestActive = false;
+        let adminListPending = false;
         function debouncedAdminSearch() {
             clearTimeout(adminSearchTimer);
             adminPage = 1;
             adminSearchTimer = setTimeout(() => renderParticipantsTable(), 350);
         }
         function renderParticipantsTable() {
-            if (!adminToken || adminListRequestActive) return;
-            adminListRequestActive = true;
             if (!adminToken) return;
+            if (adminListRequestActive) {
+                // Keep the newest search/filter/page request instead of silently dropping it.
+                adminListPending = true;
+                return;
+            }
+            adminListRequestActive = true;
 
             const tbody = document.getElementById("adminTableBody");
             const search = document.getElementById("adminSearchInput")?.value || "";
@@ -1648,6 +1653,12 @@
 
             gas()
                 .withSuccessHandler(result => {
+                    adminListRequestActive = false;
+                    if (adminListPending) {
+                        adminListPending = false;
+                        renderParticipantsTable();
+                        return;
+                    }
                     if (!result?.success) {
                         tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-red-500">${escapeHtml(result?.message || "Gagal memuat data.")}</td></tr>`;
                         return;
@@ -1709,7 +1720,15 @@
                     lucide.createIcons();
                     renderAdminPagination(result);
                 })
-                .withFailureHandler(err => { adminListRequestActive = false; adminError(err); })
+                .withFailureHandler(err => {
+                    adminListRequestActive = false;
+                    if (adminListPending) {
+                        adminListPending = false;
+                        renderParticipantsTable();
+                        return;
+                    }
+                    adminError(err);
+                })
                 .adminListParticipants(adminToken, {
                     page: adminPage,
                     pageSize: ADMIN_PAGE_SIZE,
