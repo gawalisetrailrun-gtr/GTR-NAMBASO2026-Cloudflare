@@ -74,18 +74,71 @@
             touch-action: manipulation;
         }
 
+        @page {
+            size: A4 portrait;
+            margin: 10mm;
+        }
         @media print {
-            body * { visibility: hidden; }
-            #printableTicket, #printableTicket * { visibility: visible; }
+            html, body {
+                width: 100% !important;
+                height: auto !important;
+                min-height: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: visible !important;
+                background: #fff !important;
+            }
+            body * { visibility: hidden !important; }
+            #ticketModal {
+                display: block !important;
+                position: static !important;
+                inset: auto !important;
+                width: auto !important;
+                height: auto !important;
+                max-height: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: visible !important;
+                background: #fff !important;
+                backdrop-filter: none !important;
+            }
+            #ticketModal > div {
+                display: block !important;
+                position: static !important;
+                width: auto !important;
+                max-width: none !important;
+                max-height: none !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: visible !important;
+                border: 0 !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+            }
+            #printableTicket, #printableTicket * { visibility: visible !important; }
             #printableTicket {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
+                position: static !important;
+                display: block !important;
+                width: 100% !important;
+                height: auto !important;
+                max-height: none !important;
+                margin: 0 !important;
+                padding: 5mm !important;
+                overflow: visible !important;
+                box-sizing: border-box !important;
                 background: white !important;
                 color: black !important;
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+                font-size: 10pt !important;
             }
-            .no-print { display: none !important; }
+            #printableTicket h2 { font-size: 17pt !important; }
+            #printableTicket .space-y-4 > :not([hidden]) ~ :not([hidden]),
+            #printableTicket .space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 10px !important; }
+            #printableTicket .p-5, #printableTicket .sm\:p-8 { padding: 10px !important; }
+            #printableTicket .p-3\.5, #printableTicket .sm\:p-4 { padding: 8px !important; }
+            #printableTicket .no-print, .no-print { display: none !important; }
         }
     </style>
 </head>
@@ -1465,7 +1518,6 @@
                             nama: result.nama,
                             nik: data.nik,
                             whatsapp: data.whatsapp,
-                            email: data.email,
                             kategori: result.kategori,
                             jerseyRace: result.jerseyRace,
                             sizeJersey: data.sizeJersey,
